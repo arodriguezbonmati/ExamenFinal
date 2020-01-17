@@ -1,0 +1,34 @@
+    type Usuario {
+        _id: ID!
+        email: String!
+        password: String!
+        type: Int!
+        token: ID
+        posts: [Post!]
+    }
+
+    type Post {
+        _id: ID!
+        title: String!
+        description: String!
+        author: Usuario!
+    }
+    
+    type Subscription {
+        subAuthor(email: String!, token: ID!, subEmail: String!): Post!
+    }
+
+    type Query {
+        getPosts(email: String!, token: ID!): [Post!]
+        getAuthorsPosts(email: String!, token: ID!, emailAuthor: String!): [Post!]
+        getOnePost(email: String!, token: ID!, _id: ID!): Post!
+    }
+
+    type Mutation {
+        signUp(email: String!, password: String!, type: Int!): Usuario!
+        login(email: String!, password: String!): Usuario!
+        logout(email: String!, token: ID!): Usuario!
+        addPost(email: String!, token: ID!, title: String!, description: String!): Post!
+        removeUser(email: String!, token: ID!): String!
+        removePost(email: String!, token: ID!, _id: ID!): String!
+    }
